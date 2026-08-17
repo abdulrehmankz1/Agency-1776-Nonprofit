@@ -1,7 +1,10 @@
 import "./globals.css";
+import Script from "next/script";
 import { Bebas_Neue, Space_Grotesk } from "next/font/google";
 import { ThemeProvider, themeInitScript } from "@/components/ThemeProvider";
 import { Cursor } from "@/components/Cursor";
+
+const GA_MEASUREMENT_ID = "G-LTX4B5QNYQ";
 
 // Editorial display face — all-caps by nature, best at large sizes with
 // a touch of tracking. Exposed as --font-heading; base rules in
@@ -60,6 +63,18 @@ export default function RootLayout({ children }) {
           <Cursor />
           {children}
         </ThemeProvider>
+        <Script
+          src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+          strategy="afterInteractive"
+        />
+        <Script id="google-analytics" strategy="afterInteractive">
+          {`
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
+            gtag('config', '${GA_MEASUREMENT_ID}');
+          `}
+        </Script>
       </body>
     </html>
   );
